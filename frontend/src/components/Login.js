@@ -7,7 +7,7 @@ function Login({ onLogin }) {
   const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // stops the page from refreshing on form submit
+    e.preventDefault();
     setError('');
 
     try {
@@ -16,40 +16,46 @@ function Login({ onLogin }) {
         password,
       });
 
-      // Save token so the user stays logged in
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('user', JSON.stringify(res.data.user));
 
-      onLogin(res.data.user); // tell App.js the user is now logged in
+      onLogin(res.data.user);
     } catch (err) {
       setError(err.response?.data?.error || 'Login failed');
     }
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="max-w-sm mx-auto bg-stone-50 p-6 rounded-lg shadow-sm border border-stone-200">
+      <h2 className="text-xl font-semibold text-stone-800 mb-4">Login</h2>
+      <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label>Email</label>
+          <label className="block text-sm font-medium text-stone-700 mb-1">Email</label>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            className="w-full border border-stone-300 rounded-md px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-green-700"
           />
         </div>
         <div>
-          <label>Password</label>
+          <label className="block text-sm font-medium text-stone-700 mb-1">Password</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            className="w-full border border-stone-300 rounded-md px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-green-700"
           />
         </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type="submit">Login</button>
+        {error && <p className="text-red-700 text-sm">{error}</p>}
+        <button
+          type="submit"
+          className="w-full bg-green-800 hover:bg-green-900 text-white font-medium py-2 rounded-md transition"
+        >
+          Login
+        </button>
       </form>
     </div>
   );
