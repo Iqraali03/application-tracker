@@ -21,7 +21,7 @@ function Dashboard() {
   const fetchApplications = async () => {
     const token = localStorage.getItem('token');
     try {
-      const res = await axios.get('${process.env.REACT_APP_API_URL}/api/applications', {
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/applications`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setApplications(res.data.applications);

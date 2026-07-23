@@ -15,7 +15,7 @@ function AddApplication({ onApplicationAdded }) {
 
     try {
       const res = await axios.post(
-        '${process.env.REACT_APP_API_URL}/api/applications',
+        `${process.env.REACT_APP_API_URL}/api/applications`,
         { company_name: companyName, role_title: roleTitle, notes },
         { headers: { Authorization: `Bearer ${token}` } }
       );

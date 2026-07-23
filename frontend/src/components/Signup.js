@@ -12,13 +12,13 @@ function Signup({ onSignup, switchToLogin }) {
     setError('');
 
     try {
-      await axios.post('${process.env.REACT_APP_API_URL}/api/auth/signup', {
+      await axios.post(`${process.env.REACT_APP_API_URL}/api/applications`, {
         name,
         email,
         password,
       });
 
-      const loginRes = await axios.post('${process.env.REACT_APP_API_URL}/api/auth/login', {
+      const loginRes = await axios.post(`${process.env.REACT_APP_API_URL}/api/applications`, {
         email,
         password,
       });
