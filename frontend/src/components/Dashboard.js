@@ -13,7 +13,6 @@ function Dashboard() {
 
   const fetchApplications = async () => {
     const token = localStorage.getItem('token');
-
     try {
       const res = await axios.get('http://localhost:5000/api/applications', {
         headers: { Authorization: `Bearer ${token}` },
@@ -27,8 +26,35 @@ function Dashboard() {
   };
 
   const handleApplicationAdded = (newApp) => {
-    // Add the new application to the top of the existing list, no re-fetch needed
     setApplications([newApp, ...applications]);
+  };
+
+  const handleDelete = async (id) => {
+    const token = localStorage.getItem('token');
+    try {
+      await axios.delete(`http://localhost:5000/api/applications/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setApplications(applications.filter((app) => app.id !== id));
+    } catch (err) {
+      alert('Failed to delete application');
+    }
+  };
+
+  const handleStatusChange = async (id, newStatus) => {
+    const token = localStorage.getItem('token');
+    try {
+      const res = await axios.put(
+        `http://localhost:5000/api/applications/${id}`,
+        { status: newStatus },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setApplications(
+        applications.map((app) => (app.id === id ? res.data.application : app))
+      );
+    } catch (err) {
+      alert('Failed to update status');
+    }
   };
 
   if (loading) return <p>Loading applications...</p>;
@@ -45,8 +71,17 @@ function Dashboard() {
         <ul>
           {applications.map((app) => (
             <li key={app.id}>
-              <strong>{app.company_name}</strong> — {app.role_title} (
-              {app.status})
+              <strong>{app.company_name}</strong> — {app.role_title}{' '}
+              <select
+                value={app.status}
+                onChange={(e) => handleStatusChange(app.id, e.target.value)}
+              >
+                <option value="applied">Applied</option>
+                <option value="interview">Interview</option>
+                <option value="offer">Offer</option>
+                <option value="rejected">Rejected</option>
+              </select>
+              <button onClick={() => handleDelete(app.id)}>Delete</button>
             </li>
           ))}
         </ul>
