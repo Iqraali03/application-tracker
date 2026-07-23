@@ -21,7 +21,7 @@ function Dashboard() {
   const fetchApplications = async () => {
     const token = localStorage.getItem('token');
     try {
-      const res = await axios.get('http://localhost:5000/api/applications', {
+      const res = await axios.get('${process.env.REACT_APP_API_URL}/api/applications', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setApplications(res.data.applications);
@@ -39,7 +39,7 @@ function Dashboard() {
   const handleDelete = async (id) => {
     const token = localStorage.getItem('token');
     try {
-      await axios.delete(`http://localhost:5000/api/applications/${id}`, {
+      await axios.delete(`${process.env.REACT_APP_API_URL}/api/applications/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setApplications(applications.filter((app) => app.id !== id));
@@ -52,7 +52,7 @@ function Dashboard() {
     const token = localStorage.getItem('token');
     try {
       const res = await axios.put(
-        `http://localhost:5000/api/applications/${id}`,
+        `${process.env.REACT_APP_API_URL}/api/applications/${id}`,
         { status: newStatus },
         { headers: { Authorization: `Bearer ${token}` } }
       );
