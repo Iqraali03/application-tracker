@@ -1,6 +1,9 @@
 # Application Tracker
 
 A full-stack web app for tracking job/internship applications — built to manage my own internship search, and to practice full-stack development end to end.
+## Live Demo
+[https://application-tracker-u7d4.vercel.app/](https://application-tracker-u7d4.vercel.app/)
+
 
 ## Features
 - User authentication (signup/login) with hashed passwords and JWT-based sessions
